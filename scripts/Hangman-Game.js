@@ -19,7 +19,10 @@ document.addEventListener("DOMContentLoaded", () => {
     const playAgainButton = document.getElementById("play-again");
     const wordElement = document.getElementById("word");
 
-    let selectedWord;
+    let selectedWord, displayWord;
+    let wins = 0
+    let losses = 0
+    let winStreak = 0
 
 });
 
@@ -91,6 +94,24 @@ if (selectedWord.includes(letter.toLowerCase())) {
         incorrectGuesses++;
         hangmanState.increment();
         if (incorrectGuesses >= hangmanState.maxGuesses) {
-            // Create an "endgame" to end the game
+            
         }
 }};
+
+function endgame(won) {
+    if (won) {
+        wins++;
+        winStreak++;
+        messageElement.textContent = "Congratulations! You Won!";
+    } else {
+        losses++;
+        winStreak = 0; 
+
+    }
+}
+
+// Create startgame to start the game
+
+// Win streak tally
+
+// Create an "endgame" to end the game

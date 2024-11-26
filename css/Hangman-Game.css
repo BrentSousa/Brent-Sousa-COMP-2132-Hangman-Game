@@ -1,0 +1,12 @@
+.letters button.correct {
+    background-color: grey;
+    color: white;
+    border: none;
+}
+
+.letters button.incorrect {
+    background-color: #9e9e9e;
+    color: white;
+    border: none;
+    cursor: not-allowed;
+}

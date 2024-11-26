@@ -72,3 +72,25 @@ function startGame() {
 function updateWordDisplay() {
     wordElement.textContent = displayWord.join(" ");
 }
+
+
+function handleGuess(letter, button) {
+button.disabled = true;
+
+if (selectedWord.includes(letter.toLowerCase())) {
+    button.classList.add("correct");
+    selectedWord.split("").forEach((char, index) => {
+        if (char === letter.toLowerCase()) {
+            displayWord[index] = letter;
+}
+
+    });
+    updateWordDisplay();
+    } else {
+        button.classList.add("incorrect");
+        incorrectGuesses++;
+        hangmanState.increment();
+        if (incorrectGuesses >= hangmanState.maxGuesses) {
+            // Create an "endgame" to end the game
+        }
+}};

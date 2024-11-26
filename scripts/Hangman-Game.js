@@ -14,6 +14,12 @@ const words = [
 document.addEventListener("DOMContentLoaded", () => {
     const lettersContainer = document.getElementById("letters");
     const hangmanImage = document.getElementById("hangman-img");
+    const hintElement = document.getElementById("hint");
+    const messageElement = document.getElementById("message");
+    const playAgainButton = document.getElementById("play-again");
+    const wordElement = document.getElementById("word");
+
+    let selectedWord;
 
 });
 
@@ -46,4 +52,23 @@ const hangmanState = {
 
 function updateHangmanImage() {
     hangmanImage.src = `../hangman-game-images/hangman-${hangmanState.currentImage}.svg`;
+}
+
+function startGame() {
+    const randomIndex = Math.floor(Math.random() * words.length);
+    const selected = words[randomIndex];
+    selectedWord = selected.word;
+    hintElement.textContent = selected.hint;
+    displayWord = "_".repeat(selectedWord.length).split("");
+    incorrectGuesses = 0;
+
+    updateWordDisplay();
+    generateLetterButtons();
+    messageElement.textContent = "";
+    playAgainButton.classList.add("hidden");
+    hangmanState.reset();
+}
+
+function updateWordDisplay() {
+    wordElement.textContent = displayWord.join(" ");
 }

@@ -12,56 +12,49 @@ const words = [
 // Game function
 
 
-// Win streak display
-
-
 document.addEventListener("DOMContentLoaded", () => {
+    const hintElement = document.getElementById("hint");
+    const wordElement = document.getElementById("word");
     const lettersContainer = document.getElementById("letters");
     const hangmanImage = document.getElementById("hangman-img");
-    const hintElement = document.getElementById("hint");
     const messageElement = document.getElementById("message");
     const playAgainButton = document.getElementById("play-again");
-    const wordElement = document.getElementById("word");
     const totalWinsElement = document.getElementById("total-wins");
     const totalLossesElement = document.getElementById("total-losses");
+    const winStreakElement = document.getElementById("win-streak");
 
     let selectedWord, displayWord;
     let wins = 0
     let losses = 0
     let winStreak = 0
 
-});
+    // Win streak display
 
-
-generateLetterButton();
-
-function generateLetterButton() {
-    lettersContainer.innerhtml = "";
-    for (let i = 65; i <= 90; i++) {
-    const letter = String.fromCharCode(i);
-    const button = document.createElement("button");
-    button.textContent = letter;
-    button.addEventListener("click", () => handleGuess(letter, button));
-    lettersContainer.appendChild(button);
+    function updateWinStreakDisplay() {
+        const winStreakElement = document.getElementById("win-streak");
+        if (winStreakElement) {
+            winStreakElement.textContent = `Win Streak: ${winStreak}`;
+        }
     }
-}
 
-const hangmanState = {
-    maxGuesses: 6,
-    currentImage: 0,
-    reset() {
-        this.currentImage=0
-        updateHangmanImage();
-    },
-    increment() {
-        this.currentImage++;
-        updateHangmanImage();
-    },
-};
+
+    const hangmanState = {
+        maxGuesses: 6,
+        currentImage: 0,
+        reset() {
+            this.currentImage = 0;
+            updateHangmanImage();
+        },
+        increment() {
+            this.currentImage++;
+            updateHangmanImage();
+        },
+    };
 
 function updateHangmanImage() {
     hangmanImage.src = `../hangman-game-images/hangman-${hangmanState.currentImage}.svg`;
 }
+
 
 function startGame() {
     const randomIndex = Math.floor(Math.random() * words.length);
@@ -82,16 +75,31 @@ function updateWordDisplay() {
     wordElement.textContent = displayWord.join(" ");
 }
 
+function generateLetterButtons() {
+    lettersContainer.innerhtml = "";
+    for (let i = 65; i <= 90; i++) {
+    const letter = String.fromCharCode(i);
+    const button = document.createElement("button");
+    button.textContent = letter;
+    button.addEventListener("click", () => handleGuess(letter, button));
+    lettersContainer.appendChild(button);
+    }
+}
 
 function handleGuess(letter, button) {
 button.disabled = true;
 
+}
+
 if (selectedWord.includes(letter.toLowerCase())) {
     button.classList.add("correct");
+
+}
+
     selectedWord.split("").forEach((char, index) => {
         if (char === letter.toLowerCase()) {
             displayWord[index] = letter;
-}
+    }
 
     });
     updateWordDisplay();
@@ -102,12 +110,12 @@ if (selectedWord.includes(letter.toLowerCase())) {
         if (incorrectGuesses >= hangmanState.maxGuesses) {
             endgame(false);
         }
-    }
-}
+});
 
 if (!displayWord.includes("_")) {
     endgame(true);
 }
+
 
 function endgame(won) {
     if (won) {
@@ -120,8 +128,18 @@ function endgame(won) {
         messageElement.textContent = `You lost!`;
     }
 
-    totalwins
+    totalWinsElement.textContent = wins;
+    totalLossesElement.textContent = losses;
+    winStreakElement.textContent = winStreak;
+
+    lettersContainer.innerHTML = "";
+    playAgainButton.classList.remove("hidden");
 }
+
+playAgainButton.addEventListener("click", startGame);
+startGame();
+
+
 
 // Create startgame to start the game
 

@@ -106,7 +106,7 @@ function endgame(won) {
     } else {
         losses++;
         winStreak = 0; 
-
+        
     }
 }
 

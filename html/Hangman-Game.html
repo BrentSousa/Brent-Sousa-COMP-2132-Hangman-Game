@@ -2,10 +2,10 @@
 <html lang="en">
 	<head>
 		<meta charset="utf-8">
-		<title></title>
+		<title>COMP 2132 Final Project | Hangman Game</title>
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<script src="../scripts/Hangman-Game.js" defer="defer"></script>
-		<link rel="stylesheet" href="../css/Hangman-Game.css" media="all">
+		<link rel="stylesheet" href="../css/Hangman-Game.css">
 	</head>
 	<body>
 
@@ -20,15 +20,13 @@
 			<div class="hint">
 				<p><strong>Hint:</strong> <span id="hint"></span></p>
 			</div>
-
-		<div class="game-container"></div>
+			<div class="word" id="word"></div>
 		<div class="hangman-images">
 			<img id="hangman-img" src="../hangman-game-images/hangman-0.svg" alt="Hangman">
 		</div>
-
+		<div id="lettersContainer"></div>
 		<div class="letters" id="Letters"></div>
 		<div class="message" id="message"></div>
-
 		<button id="play-again" class="hidden">Play Again</button>
 	
 	</body>

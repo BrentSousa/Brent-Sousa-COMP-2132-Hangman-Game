@@ -22,7 +22,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const totalLossesElement = document.getElementById("total-losses");
     const winStreakElement = document.getElementById("win-streak");
 
-    let selectedWord, displayWord;
+    let selectedWord, displayWord, incorrectGuesses;
     let wins = 0
     let losses = 0
     let winStreak = 0
@@ -69,19 +69,20 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     function updateWordDisplay() {
-    wordElement.textContent = displayWord.join(" ");
+        wordElement.textContent = displayWord.join(" ");
     }
 
     function generateLetterButtons() {
+        const lettersContainer = document.getElementById('lettersContainer');
         lettersContainer.innerhtml = "";
         for (let i = 65; i <= 90; i++) {
-        const letter = String.fromCharCode(i);
-        const button = document.createElement("button");
-        button.textContent = letter;
-        button.addEventListener("click", () => handleGuess(letter, button));
-        lettersContainer.appendChild(button);
+            const letter = String.fromCharCode(i);
+            const button = document.createElement("button");
+            button.textContent = letter;
+            button.addEventListener("click", () => handleGuess(letter, button));
+            lettersContainer.appendChild(button);
+        }
     }
-}
 
     function handleGuess(letter, button) {
     button.disabled = true;

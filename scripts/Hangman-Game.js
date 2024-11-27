@@ -11,6 +11,10 @@ const words = [
 
 // Game function
 
+
+// Win streak display
+
+
 document.addEventListener("DOMContentLoaded", () => {
     const lettersContainer = document.getElementById("letters");
     const hangmanImage = document.getElementById("hangman-img");
@@ -18,6 +22,8 @@ document.addEventListener("DOMContentLoaded", () => {
     const messageElement = document.getElementById("message");
     const playAgainButton = document.getElementById("play-again");
     const wordElement = document.getElementById("word");
+    const totalWinsElement = document.getElementById("total-wins");
+    const totalLossesElement = document.getElementById("total-losses");
 
     let selectedWord, displayWord;
     let wins = 0
@@ -94,9 +100,14 @@ if (selectedWord.includes(letter.toLowerCase())) {
         incorrectGuesses++;
         hangmanState.increment();
         if (incorrectGuesses >= hangmanState.maxGuesses) {
-            
+            endgame(false);
         }
-}};
+    }
+}
+
+if (!displayWord.includes("_")) {
+    endgame(true);
+}
 
 function endgame(won) {
     if (won) {
@@ -106,12 +117,12 @@ function endgame(won) {
     } else {
         losses++;
         winStreak = 0; 
-        
+        messageElement.textContent = `You lost!`;
     }
+
+    totalwins
 }
 
 // Create startgame to start the game
 
 // Win streak tally
-
-// Create an "endgame" to end the game

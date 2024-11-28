@@ -1,89 +1,180 @@
-@font-face {
-    font-family: MyFonts;
-    src: url(../fonts/Montserrat-Italic-VariableFont_wght.ttf);
-  }
-
-  body {
-    font-family: MyFonts;
+/* General Reset */
+body, h1, p, div, button {
     margin: 0;
     padding: 0;
-    background-color: #f0f0f0;
+    box-sizing: border-box;
+}
+
+/* Body Styling */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #444;
     color: #333;
     display: flex;
     justify-content: center;
     align-items: center;
-    min-height: 100vh;
+    height: 100vh;
+    margin: 0;
 }
 
-h1 {
-    text-align: center;
-    font: optional;
-    color: #2c3e50;
-    margin-bottom: 20px;
-}
-
-/* Tally */
-.tally {
-    text-align: center;
-    margin-bottom: 20px;
-}
-
-.tally p {
-    font-size: 1.2rem;
-    margin: 50px 0;
-    color: #34495e;
-}
-
-
-.tally span {
-    font-weight: bold;
-    color: #2980b9;
-}
-
-/* Game container */
+/* Game Container */
 .game-container {
-    max-width: 700px;
-    background-color: #ffffff;
-    border-radius: 10px;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    background: #fff;
+    border-radius: 15px;
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
     padding: 20px;
+    width: 400px;
     text-align: center;
 }
 
-/* Hints */
-.hint {
-    margin-bottom: 20px;
-    font-size: 1.2rem;
-    color: black;
-}
-
-.hint strong {
-    color: #c0392b;
-    font-weight: bold;
-}
-
-/* Words */
-.word {
+/* Header */
+h1 {
     font-size: 2rem;
-    letter-spacing: 8px;
-    font-weight: bold;
+    color: #444;
     margin-bottom: 20px;
-    color: #34495e;
-    word-spacing: 4px;
+    text-transform: uppercase;
 }
 
-/* Hangman Image(s) */
-.hangman-images img {
-    max-width: 100%;
-    height: auto;
-    margin: 0 auto 20px;
-    display: block;
+/* Hint Section */
+.hint p {
+    font-size: 1.1rem;
+    margin-bottom: 15px;
+    color: #555;
 }
 
-/* Letters */
+/* Word Display */
+.word {
+    font-size: 1.8rem;
+    font-weight: bold;
+    letter-spacing: 10px;
+    margin: 20px 0;
+    color: #222;
+}
+
+/* Hangman Image */
+.hangman-image img {
+    width: 100%;
+    max-width: 200px;
+    margin: 15px auto;
+}
+
+/* Letters Section */
 .letters {
     display: flex;
     flex-wrap: wrap;
-    gap: 10px;
     justify-content: center;
+    gap: 10px;
+    margin: 20px 0;
 }
+
+.letters button {
+    background: #007bff;
+    border: none;
+    color: white;
+    font-size: 1rem;
+    font-weight: bold;
+    width: 40px;
+    height: 40px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+.letters button:hover:not(:disabled) {
+    background-color: #0056b3;
+    transform: scale(1.1);
+}
+
+.letters button:disabled {
+    background: #ddd;
+    color: #aaa;
+    cursor: not-allowed;
+}
+
+/* Message Section */
+.message {
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin: 20px 0;
+    color: #444;
+}
+
+.message.win {
+    color: #28a745;
+}
+
+.message.lose {
+    color: #dc3545;
+}
+
+/* Play Again Button */
+#play-again {
+    background: #28a745;
+    color: white;
+    font-size: 1.1rem;
+    font-weight: bold;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+#play-again.hidden {
+    display: none;
+}
+
+#play-again:hover {
+    background: #218838;
+    transform: scale(1.05);
+}
+
+/* Responsive Design */
+@media (max-width: 500px) {
+    .game-container {
+        width: 90%;
+        padding: 15px;
+    }
+
+    .letters button {
+        width: 30px;
+        height: 30px;
+        font-size: 0.9rem;
+    }
+
+    .word {
+        font-size: 1.5rem;
+        letter-spacing: 5px;
+    }
+}
+
+/* Tally Section */
+.tally {
+    display: flex;
+    justify-content: space-around;
+    margin: 15px 0;
+    padding: 10px;
+    background: #f8f9fa;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    font-size: 1.1rem;
+    color: #333;
+    font-weight: bold;
+}
+
+.tally p {
+    margin: 0;
+}
+
+.tally p#wins {
+    color: #28a745; /* Green for wins */
+}
+
+.tally p#losses {
+    color: #dc3545; /* Red for losses */
+}
+
+.tally p#streak {
+    color: #007bff; /* Blue for streak */
+}
+

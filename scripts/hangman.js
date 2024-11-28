@@ -1,16 +1,3 @@
-// Word List
-
-const words = [
-    { word: "javascript", hint: "A programming language" },
-    { word: "browser", hint: "Used to surf the web" },
-    { word: "keyboard", hint: "Input device" },
-    { word: "developer", hint: "Software creator" },
-    { word: "function", hint: "Code block that does something" },
-    { word: "Mouse", hint: "Used to navigate the desktop" },
-];
-
-// Game function
-
 document.addEventListener("DOMContentLoaded", () => {
     const hintElement = document.getElementById("hint");
     const wordElement = document.getElementById("word");
@@ -18,22 +5,14 @@ document.addEventListener("DOMContentLoaded", () => {
     const hangmanImage = document.getElementById("hangman-img");
     const messageElement = document.getElementById("message");
     const playAgainButton = document.getElementById("play-again");
-    const totalWinsElement = document.getElementById("total-wins");
-    const totalLossesElement = document.getElementById("total-losses");
-    const winStreakElement = document.getElementById("win-streak");
+    const winsElement = document.getElementById("wins");
+    const lossesElement = document.getElementById("losses");
+    const streakElement = document.getElementById("streak");
 
     let selectedWord, displayWord, incorrectGuesses;
-    let wins = 0
-    let losses = 0
-    let winStreak = 0
-
-    // Win streak display
-    function updateWinStreakDisplay() {
-        const winStreakElement = document.getElementById("win-streak");
-        if (winStreakElement) {
-            winStreakElement.textContent = `Win Streak: ${winStreak}`;
-        }
-    }
+    let totalWins = 0;
+    let totalLosses = 0;
+    let winStreak = 0;
 
     const hangmanState = {
         maxGuesses: 6,
@@ -51,7 +30,6 @@ document.addEventListener("DOMContentLoaded", () => {
     function updateHangmanImage() {
         hangmanImage.src = `../hangman-game-images/hangman-${hangmanState.currentImage}.svg`;
     }
-
 
     function startGame() {
         const randomIndex = Math.floor(Math.random() * words.length);
@@ -73,8 +51,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     function generateLetterButtons() {
-        const lettersContainer = document.getElementById('lettersContainer');
-        lettersContainer.innerhtml = "";
+        lettersContainer.innerHTML = "";
         for (let i = 65; i <= 90; i++) {
             const letter = String.fromCharCode(i);
             const button = document.createElement("button");
@@ -85,54 +62,58 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     function handleGuess(letter, button) {
-    button.disabled = true;
+        button.disabled = true;
 
-    if (selectedWord.includes(letter.toLowerCase())) {
-        button.classList.add("correct");
+        if (selectedWord.includes(letter.toLowerCase())) {
+            selectedWord.split("").forEach((char, index) => {
+                if (char === letter.toLowerCase()) {
+                    displayWord[index] = letter;
+                }
+            });
+            updateWordDisplay();
+        } else {
+            incorrectGuesses++;
+            hangmanState.increment();
 
-    selectedWord.split("").forEach((char, index) => {
-        if (char === letter.toLowerCase()) {
-            displayWord[index] = letter;
+            if (incorrectGuesses >= hangmanState.maxGuesses) {
+                endGame(false);
+            }
         }
-    });
-    updateWordDisplay();
-    } else {
 
-        button.classList.add("incorrect");
-
-        incorrectGuesses++;
-        hangmanState.increment();
-
-        if (incorrectGuesses >= hangmanState.maxGuesses) {
-            endgame(false);
+        if (!displayWord.includes("_")) {
+            endGame(true);
         }
     }
 
-    if (!displayWord.includes("_")) {
-        endgame(true);
-    }
-
-}
-
-    function endgame(won) {
+    function endGame(won) {
         if (won) {
-        wins++;
-        winStreak++;
-        messageElement.textContent = "Congratulations! You Won!";
-    } else {
-        losses++;
-        winStreak = 0; 
-        messageElement.textContent = `You Lost! The word was "${selectedWord}"`;
-    }
+            totalWins++;
+            winStreak++;
+            messageElement.textContent = "Congratulations! You Won!";
+            messageElement.classList.add("win");
+            messageElement.classList.remove("lose");
+        } else {
+            totalLosses++;
+            winStreak = 0;
+            messageElement.textContent = `You Lost! The word was "${selectedWord}"`;
+            messageElement.classList.add("lose");
+            messageElement.classList.remove("win");
+        }
 
-        totalWinsElement.textContent = wins;
-        totalLossesElement.textContent = losses;
-        winStreakElement.textContent = winStreak;
-
+        updateTally();
         lettersContainer.innerHTML = "";
         playAgainButton.classList.remove("hidden");
     }
 
+    function updateTally() {
+        winsElement.textContent = `Wins: ${totalWins}`;
+        lossesElement.textContent = `Losses: ${totalLosses}`;
+        streakElement.textContent = `Win Streak: ${winStreak}`;
+    }
+
     playAgainButton.addEventListener("click", startGame);
+
+    // Initialize the game and tally
     startGame();
+    updateTally();
 });

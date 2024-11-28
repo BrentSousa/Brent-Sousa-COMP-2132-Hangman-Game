@@ -28,7 +28,9 @@ document.addEventListener("DOMContentLoaded", () => {
     };
 
     function updateHangmanImage() {
+        hangmanImage.classList.remove("fade");
         hangmanImage.src = `../hangman-game-images/hangman-${hangmanState.currentImage}.svg`;
+        hangmanImage.classList.add("fade");
     }
 
     function startGame() {
